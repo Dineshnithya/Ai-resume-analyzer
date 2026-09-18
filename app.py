@@ -89,33 +89,74 @@ Do not invent candidate experience or skills.
 """
 
         result = structured_llm.invoke(prompt)
+# Get skills from resume and job description
+candidate_skills = {
+    skill.lower().strip()
+    for skill in result.candidate_skills
+}
 
+required_skills = {
+    skill.lower().strip()
+    for skill in result.required_skills
+}
 
-        st.subheader("🧠 AI Resume Analysis")
+# Find matching and missing skills
+matching_skills = candidate_skills & required_skills
+missing_skills = required_skills - candidate_skills
 
-        st.write("### 📌 Summary")
-        st.write(result.summary)
+# Calculate match percentage
+if required_skills:
+    match_percentage = round(
+        len(matching_skills) / len(required_skills) * 100
+    )
+else:
+    match_percentage = 0
+st.subheader("📊 Job Match")
 
-        st.write("### 🛠️ Skills")
-        for skill in result.skills:
-            st.write(f"- {skill}")
+st.metric(
+    "Skill Match",
+    f"{match_percentage}%"
+)
 
-        st.write("### 🚀 Projects")
-        for project in result.projects:
-            st.write(f"- {project}")
+st.write("### ✅ Matching Skills")
 
-        st.write("### 💪 Strengths")
-        for strength in result.strengths:
-            st.write(f"- {strength}")
+for skill in matching_skills:
+    st.write(f"- {skill}")
 
-        st.write("### ⚠️ Weaknesses")
-        for weakness in result.weaknesses:
-            st.write(f"- {weakness}")
+st.write("### ❌ Missing Skills")
 
-        st.write("### 📚 Missing Skills")
-        for skill in result.missing_skills:
-            st.write(f"- {skill}")
+for skill in missing_skills:
+    st.write(f"- {skill}")
 
-        st.write("### 📝 Suggestions")
-        for suggestion in result.suggestions:
-            st.write(f"- {suggestion}")
+st.write("### 📌 Summary")
+st.write(result.summary)
+
+st.write("### 🛠️ Skills")
+for skill in result.candidate_skills:
+    st.write(f"- {skill}")
+
+st.write("### 🧩 Job Description Summary")
+st.write(result.job_description_summary)
+
+st.write("### 🧑‍💼 Job Role")
+st.write(result.job_role)
+
+st.write("### 📋 Responsibilities")
+for item in result.job_responsibilities:
+    st.write(f"- {item}")
+
+st.write("### ✅ Matching Skills")
+for skill in result.matching_skills:
+    st.write(f"- {skill}")
+
+st.write("### ⚠️ Missing Skills")
+for skill in result.missing_skills:
+    st.write(f"- {skill}")
+
+st.write("### 📚 Skills to Learn")
+for skill in result.skills_to_learn:
+    st.write(f"- {skill}")
+
+st.write("### 📝 Suggestions")
+for suggestion in result.suggestions:
+    st.write(f"- {suggestion}")
