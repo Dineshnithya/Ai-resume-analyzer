@@ -1,0 +1,21 @@
+FastAPI is a modern Python web framework used for building APIs.
+
+FastAPI is commonly used to create backend services for AI and machine learning applications.
+
+Important FastAPI concepts include:
+
+1. API routes
+2. GET and POST requests
+3. Request parameters
+4. Pydantic models
+5. Request and response validation
+6. HTTP status codes
+7. Authentication
+8. Error handling
+9. API documentation
+10. Deployment
+
+A beginner learning FastAPI should first understand:
+Python functions, type hints, HTTP methods, REST APIs, JSON, and Pydantic.
+
+FastAPI can be used to expose an AI model or LLM application through an API.
